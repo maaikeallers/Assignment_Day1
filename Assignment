@@ -4,14 +4,16 @@ CREATE TABLE Mutations
 MutationID, varchar(100)
 Genomic_postition varchar(100),
 Sample_ID varchar(100),
+Reference_base varchar (1),
+Alt_base (1),
+Genotype varchar (10),
 Prediction_effect(100),
 );
 
 CREATE TABLE Samples
 (
 Sample_ID varchar (100),
-MutationID, varchar(100),
-Genotype varchar(10),
+Patien_ID varchar (100),
 );
 
 
