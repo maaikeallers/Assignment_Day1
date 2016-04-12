@@ -7,3 +7,43 @@ for item in file_PIK3CA:
     count = count+1
 print count
 file_PIK3CA.close()
+
+vi template_PIK3CA.json
+{
+  "rec": {
+            "chr": "<%= rec.chrom %>",
+            "pos": <%= rec.pos %>,
+            "ref": "<%= rec.ref %>",
+            "alt": "<%= rec.alt[0] %>",
+            "dp":  <%= rec.info.dp %>,
+            "samples": [
+              <%=
+              a = []
+              rec.each_sample { |s| a.push s.dp }
+              a.join(',')
+              %>
+   ]
+  }
+}
+wq
+
+cat PIK3CA.vcf |bio-vcf --template template_PIK3CA.json > PIK3CA.json
+mongoimport --db PIK3CA --collection vcf --drop --file PIK3CA.json --jsonArray
+
+python
+myfile_PIK3CA = open("PIK3CA.json", "r")
+from pymongo import MongoClient
+client = MongoClient()
+db = client.PIK3CA
+
+list_samples = []
+cursor = db.vcf.find()
+for item in cursor:
+  list_samples.append(item["rec"]["samples"][2:3])
+    
+endresult = []
+for item in list_samples:
+  if min(item) > 7:
+    endresult.append(item)
+
+print len(endresult)
