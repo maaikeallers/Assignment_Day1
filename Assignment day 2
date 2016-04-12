@@ -1,0 +1,9 @@
+file_PIK3CA = open("PIK3CA.vcf", "r")
+import re
+count = 0
+for item in file_PIK3CA:
+  new = re.findall("ENST00000263967", item)
+  if len(new)>=1:
+    count = count+1
+print count
+file_PIK3CA.close()
