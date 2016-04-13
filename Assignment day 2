@@ -47,3 +47,4 @@ for item in list_samples:
     endresult.append(item)
 
 print len(endresult)
+myfile_PIK3CA.close()
