@@ -1,0 +1,76 @@
+# write database file called family.rdf
+@prefix : <http://biobeat.org/rdf/ns#> .
+:House1
+	:is_in "Moerdijk" .
+:House2
+	:is_in "Moerdijk" .
+:House3
+	:is_in "Texel" .
+:House4
+	:is_in "Nijmwegen" .
+:Patient_01
+	:sex "male";
+	:age "adult";
+	:parent_of "Patient_3";
+	:parent_of "Patient_4";
+	:child_of "Patient_5";
+	:child_of "Patient_6";
+	:disease_severity "25/100";
+	:lives_at :House1 .
+:Patient_02
+	:sex "female";
+	:age "adult";
+	:parent_of "Patient_3";
+	:disease_severity "55/100";
+	:lives_at :House2 .
+:Patient_03
+	:sex "male";
+	:age "child";
+	:child_of "Patient_1";
+	:child_of "Patient_2";
+	:disease_severity "85/100";
+	:lives_at :House1;
+	:lives_at :House2 .
+:Patient_04
+	:sex "male";
+	:age "child";
+	:child_of "Patient_1";
+	:child_of "Patient_7";
+	:disease_severity "0/100";
+	:lives_at :House3 .
+:Patient_05
+	:sex "male";
+	:age "adult";
+	:parent_of "Patient_1";
+	:disease_severity "75/100";
+	:lives_at :House2 .
+:Patient_06
+	:sex "female";
+	:parent_of "Patient_1";
+	:age "adult";
+	:disease_severity "10/100";
+	:lives_at :House4 .
+:Patient_07
+	:sex "female";
+	:age "adult";
+	:parent_of "Patient_4";
+	:disease_severity "0/100";
+	:lives_at :House3 .
+
+#load in 4store
+rdf=family.rdf
+uri=http://localhost:8000/data/http://biobeat.org/data/$rdf
+curl -X DELETE $uri
+curl -T $rdf -H 'Content-Type: application/x-turtle' $uri
+
+#write sparql query called sparql2.rq
+SELECT ?patient, ?hometown, ?disease
+WHERE
+{
+  ?patient   <http://biobeat.org/rdf/ns#lives_at>    ?house .
+  ?house <http://biobeat.org/rdf/ns#is_in> ?hometown .
+  ?patient <http://biobeat.org/rdf/ns#disease_severity> ?disease.
+}
+
+#ask if disease is related to hometown
+cat sparql2.rq |sparql-query "http://localhost:8000/sparql/" -p
