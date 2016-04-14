@@ -1,4 +1,5 @@
-// make a graph that shows disease severity (green - red) in a family
+// make a graph that shows disease severity (green - red) in a family (adapted from http://www.meccanismocomplesso.org/en/test-examples-d3-jsfiddle-file-json-csv-tsv-github/)
+// javascript
 
 var radius = 250;
 var root = {
@@ -73,3 +74,17 @@ var svg = d3.select("body").append("svg")
  .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
  .text(function(d) { return d.name; }); 
 
+// CSS
+.node circle {     
+  fill: #fff;    
+  stroke: steelblue;    
+  stroke-width: 1.5px; 
+} 
+.node {    
+  font: 12px sans-serif; 
+} 
+.link {    
+  fill: none;    
+  stroke: #ccc;    
+  stroke-width: 1.5px; 
+}
