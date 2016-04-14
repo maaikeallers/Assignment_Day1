@@ -11,49 +11,49 @@
 :Patient_01
 	:sex "male";
 	:age "adult";
-	:parent_of "Patient_3";
-	:parent_of "Patient_4";
-	:child_of "Patient_5";
-	:child_of "Patient_6";
+	:parent_of :Patient_3;
+	:parent_of :Patient_4;
+	:child_of :Patient_5;
+	:child_of :Patient_6;
 	:disease_severity "25/100";
 	:lives_at :House1 .
 :Patient_02
 	:sex "female";
 	:age "adult";
-	:parent_of "Patient_3";
+	:parent_of :Patient_3;
 	:disease_severity "55/100";
 	:lives_at :House2 .
 :Patient_03
 	:sex "male";
 	:age "child";
-	:child_of "Patient_1";
-	:child_of "Patient_2";
+	:child_of :Patient_1;
+	:child_of :Patient_2;
 	:disease_severity "85/100";
 	:lives_at :House1;
 	:lives_at :House2 .
 :Patient_04
 	:sex "male";
 	:age "child";
-	:child_of "Patient_1";
-	:child_of "Patient_7";
+	:child_of :Patient_1;
+	:child_of :Patient_7;
 	:disease_severity "0/100";
 	:lives_at :House3 .
 :Patient_05
 	:sex "male";
 	:age "adult";
-	:parent_of "Patient_1";
+	:parent_of :Patient_1;
 	:disease_severity "75/100";
 	:lives_at :House2 .
 :Patient_06
 	:sex "female";
-	:parent_of "Patient_1";
+	:parent_of :Patient_1;
 	:age "adult";
 	:disease_severity "10/100";
 	:lives_at :House4 .
 :Patient_07
 	:sex "female";
 	:age "adult";
-	:parent_of "Patient_4";
+	:parent_of :Patient_4;
 	:disease_severity "0/100";
 	:lives_at :House3 .
 
@@ -72,5 +72,5 @@ WHERE
   ?patient <http://biobeat.org/rdf/ns#disease_severity> ?disease.
 }
 
-#ask if disease is related to hometown
+#do query
 cat sparql2.rq |sparql-query "http://localhost:8000/sparql/" -p
