@@ -1,6 +1,6 @@
 // make a graph that shows disease severity (green - red) in a family (adapted from http://www.meccanismocomplesso.org/en/test-examples-d3-jsfiddle-file-json-csv-tsv-github/)
 //HTML
-Family tree: healty(green)-disaesed(red)
+Family tree: healthy(green)-disaesed(red)
 <body>
 
 </body>
