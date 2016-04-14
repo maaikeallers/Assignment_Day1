@@ -1,0 +1,73 @@
+var radius = 250;
+var root = {
+  "name": "P1_1",
+  "disease": 75,
+  "children": [
+    {
+       "name": "F1_1",
+       "disease": 25,
+       "children": [
+			{"name": "F2_1",
+      "disease": 85},
+			{"name": "F2_2",
+      "disease": 0},
+      {"name": "F2_3",
+      "disease":99},
+       ]
+       },
+     { 
+     "name": "F1_2",
+     "disease": 50
+     },
+     {
+     "name" : "F1_3",
+     "disease": 10,
+     "children": [
+     {"name": "F2_4",
+     "disease": 5},
+     {"name": "F2_5",
+     "disease": 0},
+     ]
+     }
+	]
+}
+
+var margin = 120;
+var angle = 180;
+var cluster = d3.layout.cluster() 
+ .size([angle, radius-margin]); 
+ 
+var diagonal = d3.svg.diagonal.radial() 
+ .projection (function(d) { return [d.y, d.x / 180* Math.PI];}); 
+
+var svg = d3.select("body").append("svg") 
+ .attr("width",2*radius) 
+ .attr("height",2*radius) 
+ .append("g") 
+ .attr("transform","translate("+radius + "," + radius + ")");
+ 
+ var nodes = cluster.nodes(root); 
+ var links = cluster.links(nodes); 
+ var link = svg.selectAll(".link") 
+ .data(links) 
+ .enter().append("path") 
+ .attr("class","link") 
+ .attr("d", diagonal); 
+ 
+ var node = svg.selectAll(".node") 
+ .data(nodes) 
+ .enter().append("g") 
+ .attr("class","node")
+ .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; });
+
+ 
+  node.append("circle") 
+ .attr("r", 4.5)
+ .style("fill", function(d){return "rgb(" +(d.disease*10)+",100,0)"})
+ 
+ node.append("text")
+ .attr("dy", ".31em")
+ .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+ .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+ .text(function(d) { return d.name; }); 
+
