@@ -1,3 +1,5 @@
+// make a graph that shows disease severity (green - red) in a family
+
 var radius = 250;
 var root = {
   "name": "P1_1",
